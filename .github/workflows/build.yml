@@ -1,0 +1,64 @@
+name: Build Executables
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 browser_cookie3 websocket-client lz4 pycryptodomex pyaes keyring pyinstaller
+
+    - name: Build with PyInstaller
+      run: python -m PyInstaller -F --collect-all browser_cookie3 --collect-all websocket --clean ao3download.py
+
+    - name: Package Binary and Chrome Extension
+      shell: bash
+      run: |
+        mkdir -p release
+        # 1. 复制 macOS 可执行文件并重命名
+        cp dist/ao3download release/ao3download-macos
+
+        # 2. 将 chrome_extension 文件夹内容打包为 zip
+        cd chrome_extension
+        zip -r ../release/chrome-extension.zip .
+        cd ..
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-artifacts
+        path: release/*
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: release-artifacts
+        path: artifacts
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: artifacts/*
+        generate_release_notes: true
