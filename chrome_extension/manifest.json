@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "AO3 ZIP Batch Downloader",
+    "version": "4.1",
+    "description": "后台自动翻页打包作品为 ZIP 下载",
+    "permissions": [
+      "downloads"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://archiveofourown.org/*"],
+        "js": ["jszip.min.js", "content.js"]
+      }
+    ]
+  }

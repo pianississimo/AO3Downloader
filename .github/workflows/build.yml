@@ -29,14 +29,20 @@ jobs:
     - name: Build with PyInstaller
       run: python -m PyInstaller -F --collect-all browser_cookie3 --collect-all websocket --clean ao3download.py
 
-    - name: Package Binary and Chrome Extension
+    - name: Package Binary
       shell: bash
       run: |
         mkdir -p release
-        # 1. 复制 macOS 可执行文件并重命名
-        cp dist/ao3download release/ao3download-macos
+        
+        # 1. 给 PyInstaller 生成的文件赋予可执行权限
+        chmod +x dist/ao3download
+        
+        # 2. 将二进制文件打包成 zip（zip 会保留 +x 权限位）
+        cd dist
+        zip -r ../release/ao3download-macos.zip ao3download
+        cd ..
 
-        # 2. 将 chrome_extension 文件夹内容打包为 zip
+        # 3. 将 chrome_extension 文件夹内容打包为 zip
         cd chrome_extension
         zip -r ../release/chrome-extension.zip .
         cd ..
