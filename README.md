@@ -17,8 +17,9 @@
 ### macOS
 
 1. Download `ao3download-macos` from **[Releases](../../releases/latest)**.
-2. Double-click `ao3download-macos` to run.
-3. If macOS blocks it, go to **System Settings > Privacy & Security** and click **Allow Anyway** (or right-click the file and select **Open**).
+2. Grant execution permission in Terminal: `chmod +x ~/Downloads/ao3download-macos`
+3. Double-click `ao3download-macos` to run (or execute `~/Downloads/ao3download-macos` in Terminal).
+4. If macOS blocks it, go to **System Settings > Privacy & Security** and click **Allow Anyway** (or right-click the file and select **Open**).
 
 ---
 
@@ -46,8 +47,9 @@
 ### macOS 版本
 
 1. 前往 **[Releases](../../releases/latest)** 下载 `ao3download-macos`。
-2. 双击 `ao3download-macos` 运行。
-3. 如果系统提示无法打开，请前往 **系统设置 > 隐私与安全性**，点击 **仍要打开**（或右键点击该文件选择 **打开**）。
+2. 打开终端（Terminal）赋予运行权限：`chmod +x ~/Downloads/ao3download-macos`
+3. 双击 `ao3download-macos` 运行（或直接在终端中输入 `~/Downloads/ao3download-macos` 运行）。
+4. 如果系统提示无法打开，请前往 **系统设置 > 隐私与安全性**，点击 **仍要打开**（或右键点击该文件选择 **打开**）。
 
 ---
 
